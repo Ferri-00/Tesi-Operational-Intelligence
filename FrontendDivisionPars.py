@@ -6,7 +6,8 @@ def frontend_data(file_number):
     temporary_file = './temporaryFile.csv'
     
     for v in file_number:
-        file_name = f"./logs_7-13march/storm-atlas/storm-frontend-server.log-202003{v}.gz"
+#         file_name = f"./logs_7-13march/storm-atlas/storm-frontend-server.log-202003{v}.gz"
+        file_name = f"./logs_7-13march/storm-atlas-1/storm-frontend-server.log-202003{v}.gz"
 
         print("reading ", file_name)
         frontend = pd.read_table(file_name , sep = " -  " , header= None , engine = 'python')
@@ -30,7 +31,7 @@ def frontend_data(file_number):
         temporary = pd.read_table(temporary_file , sep= "]: " , header=None , engine='python' , dtype = str )
 
         frontend = pd.concat([frontend, temporary[0], temporary[1]], axis=1)
-        frontend = frontend.rename(columns={0:"Level", 1:"Content"})
+        frontend = frontend.rename(columns={0:"Level", 1:"message"})
         
         frontend.Level.to_csv(temporary_file , header=False , index=False)
         temporary = pd.read_table(temporary_file , sep= "[" , header=None , engine='python', dtype = str )
@@ -48,5 +49,6 @@ def frontend_data(file_number):
 
 print("Starting division of files")
 t0= time.time()
-frontend_data(["07","08","09","10","11","12", "13"])
+# frontend_data(["07","08","09","10","11","12", "13"])
+frontend_data(["07"])
 print(f"done in {(time.time()-t0)}")
