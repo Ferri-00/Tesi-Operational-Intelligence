@@ -13,5 +13,6 @@ def backend_data(file_number):
         backend.to_csv(f"./File/BackendFile/storm-backend-2020-03-{v}.txt", index=False)
 
 print("Starting division of files")
-# backend_data(["07","08","09","10","11","12", "13"])
-backend_data(["07"])
+
+# backend_data(["07"])
+backend_data(["08","09","10","11","12", "13"])
