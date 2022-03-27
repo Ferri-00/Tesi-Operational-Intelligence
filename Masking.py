@@ -11,7 +11,7 @@ def masking_frontend_data(file_number):
         file_name = f"./File/FrontendFile/storm-frontend-202003{v}.txt"
         print("reading ", file_name)
     
-        data = pd.read_csv(file_name)
+        data = pd.read_csv(file_name, nrows=1e4)
         f = data.message
 
         specific_substitute = 'IP'
