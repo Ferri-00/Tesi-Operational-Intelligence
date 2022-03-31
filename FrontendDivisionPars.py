@@ -19,7 +19,7 @@ def frontend_data(file_number):
 
         frontend[0].to_csv(temporary_file , header=False , index=False)
 
-        temporary = pd.read_table(temporary_file , sep=None , header=None , engine='python' , dtype = str )
+        temporary = pd.read_csv(temporary_file , sep=None , header=None , engine='python' , dtype = str )
 
         temporary[2] = temporary[2] + ' ' + temporary[3]
 
@@ -28,13 +28,13 @@ def frontend_data(file_number):
         frontend = temporary.drop(3, axis=1)
         frontend.columns = ["date", "time", "PID"]
 
-        temporary = pd.read_table(temporary_file , sep= "]: " , header=None , engine='python' , dtype = str )
+        temporary = pd.read_table(temporary_file , sep= "]: " , header=None , engine='python' )
 
         frontend = pd.concat([frontend, temporary[0], temporary[1]], axis=1)
         frontend = frontend.rename(columns={0:"Level", 1:"message"})
         
         frontend.Level.to_csv(temporary_file , header=False , index=False)
-        temporary = pd.read_table(temporary_file , sep= "[" , header=None , engine='python', dtype = str )
+        temporary = pd.read_csv(temporary_file , sep= "[" , header=None , engine='python', dtype = str )
         frontend.Level = temporary[0]
         frontend.insert(4, "id", temporary[1])
 
@@ -51,7 +51,7 @@ print("Starting division of files")
 
 t0= time.time()
 
-# frontend_data(["07"])
-frontend_data(["08","09","10","11","12", "13"])
+frontend_data(["07"])
+# frontend_data(["08","09","10","11","12", "13"])
 
 print(f"done in {(time.time()-t0)}")

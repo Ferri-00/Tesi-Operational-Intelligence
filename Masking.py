@@ -11,7 +11,7 @@ def masking_frontend_data(file_number):
         file_name = f"./File/FrontendFile/storm-frontend-202003{v}.txt"
         print("reading ", file_name)
     
-        data = pd.read_csv(file_name, nrows=1e4)
+        data = pd.read_csv(file_name, nrows=5e4)
         f = data.message
 
         specific_substitute = 'IP'
@@ -23,11 +23,12 @@ def masking_frontend_data(file_number):
         data.message = f
         
         print(f"saving storm-frontend-202003{v}-mask.txt")
-        data.to_csv(f"./File/FrontendFileMask/storm-frontend-202003{v}-mask.txt", index=False)
+#         data.to_csv(f"./File/FrontendFileMask/storm-frontend-202003{v}-mask.txt", index=False)
+        data.to_csv(f"./Tesi-Operational-Intelligence/storm-frontend-202003{v}-mask.txt", index=False)
         
 t0= time.time()
 
 masking_frontend_data(["07"])
-masking_frontend_data(["08","09","10","11","12", "13"])
+# masking_frontend_data(["08","09","10","11","12", "13"])
 
 print(f"done in {(time.time()-t0)}")
