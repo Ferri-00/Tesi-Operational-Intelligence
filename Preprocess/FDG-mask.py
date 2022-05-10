@@ -53,7 +53,7 @@ print("Starting grouping logs")
 
 t0 = time.time()
 
-# group_data(["07"])
-group_data(["08","09","10","11","12", "13"])
+group_data(["07"])
+# group_data(["08","09","10","11","12", "13"])
 
 print(f"done in {int((time.time()-t0)/60)} minutes and {((time.time()-t0)%60)} seconds")
