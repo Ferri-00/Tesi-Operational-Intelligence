@@ -51,6 +51,6 @@ print("Starting division of files")
 t0= time.time()
 
 frontend_data(["07"])
-# frontend_data(["08","09","10","11","12", "13"])
+frontend_data(["08","09","10","11","12", "13"])
 
 print(f"done in {int((time.time()-t0)/60)} minutes and {((time.time()-t0)%60)} seconds")

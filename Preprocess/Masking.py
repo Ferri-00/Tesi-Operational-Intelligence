@@ -25,7 +25,8 @@ def masking_frontend_data(file_number):
         
 t0 = time.time()
 
-masking_frontend_data(["07"])
-# masking_frontend_data(["08","09","10","11","12", "13"])
+# masking_frontend_data(["07"])
+# masking_frontend_data(["08","09","10","11"])
+masking_frontend_data(["12", "13"])
 
 print(f"done in {int((time.time()-t0)/60)} minutes and {((time.time()-t0)%60)} seconds")

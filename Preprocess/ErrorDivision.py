@@ -12,6 +12,7 @@ def division_errors(file_number):
         print('reading', file_name)
         logs = pd.read_csv(file_name, index_col=0)
         errors = pd.DataFrame(columns=logs.columns)
+        errors.to_csv(f"./File/FrontendFileErr/storm-frontend-202003{v}-err.txt")
         
         for idx, msg in zip(logs.index, logs.message):
             resultE = re.search('error', msg.lower())
@@ -20,9 +21,11 @@ def division_errors(file_number):
             if resultE!=None or resultF!=None or resultP!=None:
                 errors.loc[idx] = logs.loc[idx]
                 logs = logs.drop(idx, axis=0)
+                errors.to_csv(f"./File/FrontendFileErr/storm-frontend-202003{v}-err.txt", sep=',',
+                              mode='a', header=False)
+                errors.drop(idx, axis=0, inplace=True)
 
-        logs.to_csv(f"./File/FrontendFileErr/storm-frontend-202003{v}-msg.txt", index=False)
-        errors.to_csv(f"./File/FrontendFileErr/storm-frontend-202003{v}-err.txt", index=False)
+        logs.to_csv(f"./File/FrontendFileErr/storm-frontend-202003{v}-msg.txt")
         
 print("Starting division of files")
 

@@ -11,4 +11,4 @@ def preprocess_data(file_number):
                     fwrite.write(row.replace(',', ' '))
                     
 preprocess_data(["07"])
-# preprocess_data(["08","09","10","11","12", "13"])
+preprocess_data(["08","09","10","11","12", "13"])
