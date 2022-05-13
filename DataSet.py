@@ -69,8 +69,7 @@ import seaborn as sns
 
 def Vectorisation(file_number):
     for v in file_number:
-        file_name = f"./File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv"
-
+        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.txt"
         print('Reading', file_name)
         logs = pd.read_csv(file_name, index_col=0)
         print('creating tokens_per_message')
@@ -138,7 +137,7 @@ def Vectorisation(file_number):
               int(explained_variance * 100)))
         
         print(f'Saving data-set-frontend-202003{v}.csv')
-        np.savetxt(f'./File/DataSet/data-set-frontend-202003{v}.csv', X, delimiter=',')        
+        np.savetxt(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv', X, delimiter=',')        
         print()
 
 print("Starting the creation of the data set")
