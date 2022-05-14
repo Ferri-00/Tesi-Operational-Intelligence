@@ -107,5 +107,9 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
         centroid += [K[silhouette_avg.index(maxS)]]
     
     print('Mean number of centroid that maximize the silhouette score is', mean(centroid))
+
+if __name__ == "__main__":
+    file_number = int(sys.argv[1])
+    BestCentroid(file_number)
     
-BestCentroid(['07','08','09','10','11','12','13'])
+# ['07','08','09','10','11','12','13']
