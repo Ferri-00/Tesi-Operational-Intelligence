@@ -42,32 +42,29 @@ def Vectorisation(file_number):
     for v in file_number:
         file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv"
         print('Reading', file_name)
-        info = open("/home/ATLAS-T3/eferri/File/DataSet/info.txt", "a")
-        info.write('Reading' + file_name + '\n')
         logs = pd.read_csv(file_name, index_col=0)
         print('creating tokens_per_message')
         tokens_per_message = [x.lower().split() for x in logs.message]
-        word_set = set()
         
-        print('creating word_set')
-        info.write('Creating word_set\n')
-        for mess in tokens_per_message:
-            word_set = word_set.union(set(mess))
+        # word_set = set()
+        # print('creating word_set')
+        # for mess in tokens_per_message:
+        #     word_set = word_set.union(set(mess))
 
-        print("We have {} logs messages, for a total of {} unique tokens adopted.".format(
-            len(tokens_per_message), len(word_set)))
+        # print("We have {} logs messages, for a total of {} unique tokens adopted.".format(
+        #     len(tokens_per_message), len(word_set)))
 
-        word_dict = [dict.fromkeys(word_set, 0) for i in range(len(tokens_per_message))]
+        # word_dict = [dict.fromkeys(word_set, 0) for i in range(len(tokens_per_message))]
 
-        # Compute raw frequencies of each token per each message
-        for i in range(len(logs.message)):
-            for word in tokens_per_message[i]:
-                word_dict[i][word] += 1
+        # # Compute raw frequencies of each token per each message
+        # for i in range(len(logs.message)):
+        #     for word in tokens_per_message[i]:
+        #         word_dict[i][word] += 1
 
         c = 0
         for i, dic in enumerate(tokens_per_message):
             if not len(dic):
-                print(i, errors.loc[i])
+                print(i, logs.loc[i])
                 c += 1
 
         print("Warning: there are {} blanck messages which will be excluded from the analysis.".format(c))
@@ -104,10 +101,8 @@ def Vectorisation(file_number):
               int(explained_variance * 100)))
         
         print(f'Saving data-set-frontend-202003{v}.csv')
-        info.write(f'Saving data-set-frontend-202003{v}.csv\n')
         np.savetxt(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv', X, delimiter=',')        
         print()
-        info.close()
 
 print("Starting the creation of the data set")
 t0 = time()
