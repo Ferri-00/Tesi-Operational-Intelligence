@@ -84,16 +84,14 @@ for v in file_number:
         for msg in logs.message[km.labels_==l]:
             resultE = re.findall('error', msg.lower())
             resultF = re.findall('failure', msg.lower())
-            if resultE!=None :
-                error_per_message[l] += resultE
-                error[l] += 1
-            if resultF!=None:
-                error_per_message[l] += resultE
+            error_per_message[l] += resultE
+            error_per_message[l] += resultE
+            if resultE!=None or resultF!=None:
                 error[l] += 1
         error_per_message[l] /= len(logs.message[km.labels_==l])
 
     meanErr.append(np.mean(error))
     meanErrMsg.append(np.mean(error_per_message))
     
-print('The mean number of message with extracted from files', file_number, 'is', np.mean(meanErr))
+print('The mean number of message with errors extracted from files', file_number, 'is', np.mean(meanErr))
 print('The mean number of error per message extracted from files', file_number, 'is', np.mean(meanErrMsg))
