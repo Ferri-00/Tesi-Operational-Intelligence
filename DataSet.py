@@ -1,12 +1,12 @@
 # import libraries
-# from __future__ import print_function
+from __future__ import print_function
 
 import pandas as pd
 import numpy as np
 
 import time
 
-# from sklearn.datasets import fetch_20newsgroups
+from sklearn.datasets import fetch_20newsgroups
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 # from sklearn.feature_extraction.text import HashingVectorizer
@@ -69,14 +69,17 @@ import seaborn as sns
 
 def Vectorisation(file_number):
     for v in file_number:
-        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.txt"
+        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv"
         print('Reading', file_name)
-        logs = pd.read_csv(file_name, index_col=0)
+        info = open("/home/ATLAS-T3/eferri/File/DataSet/info.txt", "a")
+        info.write('Reading' + file_name)
+	logs = pd.read_csv(file_name, index_col=0, nrows=1e4)
         print('creating tokens_per_message')
         tokens_per_message = [x.lower().split() for x in logs.message]
         word_set = set()
         
         print('creating word_set')
+        info.write('Creating word_set')
         for mess in tokens_per_message:
             word_set = word_set.union(set(mess))
 
@@ -97,13 +100,6 @@ def Vectorisation(file_number):
                 c += 1
 
         print("Warning: there are {} blanck messages which will be excluded from the analysis.".format(c))
-
-#         tf = [compute_tf(word_dict[i], tokens_per_message[i])
-#               for i in range(len(tokens_per_message))] #if sum(word_dict[i].values())]
-
-#         idf = compute_idf(word_dict)
-
-#         tf_idf =  [compute_tf_idf(tf[i], idf) for i in range(len(tf))]
 
         # Extract TF-IDF information
         print("Extracting features from the training dataset using a sparse vectorizer")
@@ -137,25 +133,25 @@ def Vectorisation(file_number):
               int(explained_variance * 100)))
         
         print(f'Saving data-set-frontend-202003{v}.csv')
+        info.write('Saving data-set-frontend-202003{v}.csv')
         np.savetxt(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv', X, delimiter=',')        
         print()
+        info.close()
 
-# print("Starting the creation of the data set")
+print("Starting the creation of the data set")
+t0 = time()
 
-# t0 = time()
+Vectorisation(["07"])
+Vectorisation(["08","09","10","11","12", "13"])
 
-# Vectorisation(["07"])
+print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
 
-# Vectorisation(["08","09","10","11","12", "13"])
+# if __name__ == "__main__":
+#     t0 = time()
 
-# print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+#     file_number = sys.argv[1]
+#     Vectorisation(file_number)
 
-if __name__ == "__main__":
-    t0 = time()
-
-    file_number = sys.argv[1]
-    Vectorisation(file_number)
-
-    print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+#     print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
 
 # ['07','08','09','10','11','12','13']
