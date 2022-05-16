@@ -47,7 +47,7 @@ import seaborn as sns
 
 def BestCentroid(file_number, start=10, stop=50, step=1):
     for v in file_number:
-        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.txt"
+        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv"
         with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv') as file_name:
             X = np.loadtxt(file_name, delimiter=",")
 
@@ -108,8 +108,10 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
     
     print('Mean number of centroid that maximize the silhouette score is', mean(centroid))
 
-if __name__ == "__main__":
-    file_number = int(sys.argv[1])
-    BestCentroid(file_number)
+BestCentroid(['07','08','09','10','11','12','13'])
+
+# if __name__ == "__main__":
+#     file_number = int(sys.argv[1])
+#     BestCentroid(file_number)
     
 # ['07','08','09','10','11','12','13']
