@@ -44,7 +44,7 @@ def Vectorisation(file_number):
         print('Reading', file_name)
         info = open("/home/ATLAS-T3/eferri/File/DataSet/info.txt", "a")
         info.write('Reading' + file_name + '\n')
-	    logs = pd.read_csv(file_name, index_col=0, nrows=1e4)
+        logs = pd.read_csv(file_name, index_col=0)
         print('creating tokens_per_message')
         tokens_per_message = [x.lower().split() for x in logs.message]
         word_set = set()
@@ -104,7 +104,7 @@ def Vectorisation(file_number):
               int(explained_variance * 100)))
         
         print(f'Saving data-set-frontend-202003{v}.csv')
-        info.write('Saving data-set-frontend-202003{v}.csv\n')
+        info.write(f'Saving data-set-frontend-202003{v}.csv\n')
         np.savetxt(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv', X, delimiter=',')        
         print()
         info.close()
