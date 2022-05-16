@@ -38,48 +38,19 @@ ipython = get_ipython()
 # Visualizations
 import seaborn as sns
 
-# def compute_tf(word_dict, l): # l is the message from logs
-#             tf = {}
-#             sum_nk = len(l)
-#             for word, count in word_dict.items():
-#                 try:
-#                     tf[word] = count/sum_nk
-#                 except ZeroDivisionError:
-#                     tf[word] = 0
-#             return tf
-        
-# def compute_idf(strings_list):
-#     n = len(strings_list)
-#     idf = dict.fromkeys(strings_list[0].keys(), 0)
-#     for l in strings_list:
-#         for word, count in l.items():
-#             if count > 0:
-#                 idf[word] += 1
-
-#     for word, v in idf.items():
-#         idf[word] = np.log(n / float(v))
-#     return idf
-
-# def compute_tf_idf(tf, idf):
-#     tf_idf = dict.fromkeys(tf.keys(), 0)
-#     for word, v in tf.items():
-#         tf_idf[word] = v * idf[word]
-#     return tf_idf
-      
-
 def Vectorisation(file_number):
     for v in file_number:
         file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv"
         print('Reading', file_name)
         info = open("/home/ATLAS-T3/eferri/File/DataSet/info.txt", "a")
-        info.write('Reading' + file_name)
-	logs = pd.read_csv(file_name, index_col=0, nrows=1e4)
+        info.write('Reading' + file_name + '\n')
+	    logs = pd.read_csv(file_name, index_col=0, nrows=1e4)
         print('creating tokens_per_message')
         tokens_per_message = [x.lower().split() for x in logs.message]
         word_set = set()
         
         print('creating word_set')
-        info.write('Creating word_set')
+        info.write('Creating word_set\n')
         for mess in tokens_per_message:
             word_set = word_set.union(set(mess))
 
@@ -133,7 +104,7 @@ def Vectorisation(file_number):
               int(explained_variance * 100)))
         
         print(f'Saving data-set-frontend-202003{v}.csv')
-        info.write('Saving data-set-frontend-202003{v}.csv')
+        info.write('Saving data-set-frontend-202003{v}.csv\n')
         np.savetxt(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv', X, delimiter=',')        
         print()
         info.close()
