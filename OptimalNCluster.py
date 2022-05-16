@@ -51,7 +51,6 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
         with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv') as file_name:
             X = np.loadtxt(file_name, delimiter=",")
 
-        labels = np.arange(0, stop)
         Sum_of_squared_distances = []
         silhouette_avg = []
 
@@ -80,8 +79,6 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
             # silhouette score
             silhouette_avg.append(silhouette_score(X, cluster_labels))
 
-            logs["kmean_labels"] = km.labels_
-
             label = np.unique(km.labels_)
             count = [Counter(km.labels_)[i] for i in label]
 
@@ -106,6 +103,7 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
         maxS = max(silhouette_avg)
         centroid += [K[silhouette_avg.index(maxS)]]
     
+    print('Nnumber of centroids that maximize the silhouette scores is', centroid)
     print('Mean number of centroid that maximize the silhouette score is', mean(centroid))
 
 BestCentroid(['07','08','09','10','11','12','13'])
