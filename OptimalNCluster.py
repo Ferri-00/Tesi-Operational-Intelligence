@@ -46,6 +46,7 @@ ipython = get_ipython()
 import seaborn as sns
 
 def BestCentroid(file_number, start=10, stop=50, step=1):
+    silhouette = []
     for v in file_number:
         file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv"
         with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv') as file_name:
@@ -88,7 +89,7 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
         ax.set(xticks=np.arange(10, 50, 2))
         plt.grid()
         plt.title('Elbow Method For Optimal k')
-        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-squared distances', bbox_inches ="tight")
+        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-squared distances-{start}-{stop}-{step}', bbox_inches ="tight")
         plt.show()
 
         plt.plot(K,silhouette_avg, 'bx-')
@@ -97,16 +98,27 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
         ax.set(xticks=np.arange(10, 50, 2))
         plt.grid()
         plt.title('Silhouette analysis For Optimal k')
-        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-silhouette score', bbox_inches ="tight")
+        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-silhouette score-{start}-{stop}-{step}', bbox_inches ="tight")
         plt.show()
 
         maxS = max(silhouette_avg)
         centroid += [K[silhouette_avg.index(maxS)]]
+        silhouette += [silhouette_avg]
     
     print('Nnumber of centroids that maximize the silhouette scores is', centroid)
     print('Mean number of centroid that maximize the silhouette score is', mean(centroid))
 
-BestCentroid(['07','08','09','10','11','12','13'])
+    silhouette = [sum([silhouette[i][j] for i in range(len(silhouette))]) for j in range(len(silhouette))]
+    plt.plot(K,silhouette, 'bx-')
+    plt.xlabel('Values of K') 
+    plt.ylabel('Silhouette score') 
+    ax.set(xticks=np.arange(10, 50, 2))
+    plt.grid()
+    plt.title('Silhouette analysis for Optimal k computed on all files')
+    plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-silhouette score-{start}-{stop}-{step}', bbox_inches ="tight")
+    plt.show()
+
+BestCentroid(['07','08','09','10','11','12','13'], step=2)
 
 # if __name__ == "__main__":
 #     file_number = int(sys.argv[1])
