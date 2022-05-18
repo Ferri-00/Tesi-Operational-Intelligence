@@ -86,7 +86,7 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
         plt.plot(K,Sum_of_squared_distances,'bx-')
         plt.xlabel('Values of K') 
         plt.ylabel('Sum of squared distances/Inertia')
-        ax.set(xticks=np.arange(10, 50, 2))
+        plt.set(xticks=np.arange(10, 50, 2))
         plt.grid()
         plt.title('Elbow Method For Optimal k')
         plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-squared distances-{start}-{stop}-{step}', bbox_inches ="tight")
@@ -95,7 +95,7 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
         plt.plot(K,silhouette_avg, 'bx-')
         plt.xlabel('Values of K') 
         plt.ylabel('Silhouette score') 
-        ax.set(xticks=np.arange(10, 50, 2))
+        plt.set(xticks=np.arange(10, 50, 2))
         plt.grid()
         plt.title('Silhouette analysis For Optimal k')
         plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-silhouette score-{start}-{stop}-{step}', bbox_inches ="tight")
@@ -112,13 +112,13 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
     plt.plot(K,silhouette, 'bx-')
     plt.xlabel('Values of K') 
     plt.ylabel('Silhouette score') 
-    ax.set(xticks=np.arange(10, 50, 2))
+    plt.set(xticks=np.arange(10, 50, 2))
     plt.grid()
     plt.title('Silhouette analysis for Optimal k computed on all files')
     plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-silhouette score-{start}-{stop}-{step}', bbox_inches ="tight")
     plt.show()
 
-BestCentroid(['07','08','09','10','11','12','13'], step=2)
+BestCentroid(['07','08','09','10','11','12','13'], step=5)
 
 # if __name__ == "__main__":
 #     file_number = int(sys.argv[1])
