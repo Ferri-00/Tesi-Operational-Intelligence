@@ -83,23 +83,22 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
             label = np.unique(km.labels_)
             count = [Counter(km.labels_)[i] for i in label]
 
-        plt.plot(K,Sum_of_squared_distances,'bx-')
-        plt.xlabel('Values of K') 
-        plt.ylabel('Sum of squared distances/Inertia')
-        plt.set(xticks=np.arange(10, 50, 2))
-        plt.grid()
-        plt.title('Elbow Method For Optimal k')
-        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-squared distances-{start}-{stop}-{step}', bbox_inches ="tight")
-        plt.show()
-
-        plt.plot(K,silhouette_avg, 'bx-')
-        plt.xlabel('Values of K') 
-        plt.ylabel('Silhouette score') 
-        plt.set(xticks=np.arange(10, 50, 2))
-        plt.grid()
-        plt.title('Silhouette analysis For Optimal k')
+        fig, ax =  plt.subplots(2, 1, figsize=(10, 4))
+        ax[0].plot(K,Sum_of_squared_distances,'bx-')
+        ax[0].xlabel('Values of K') 
+        ax[0].ylabel('Sum of squared distances/Inertia')
+        ax[0].set(xticks=np.arange(10, 50, 2))
+        ax[0].grid()
+        ax[0].title('Elbow Method For Optimal k')
+        
+        ax[1].plot(K,silhouette_avg, 'bx-')
+        ax[1].xlabel('Values of K') 
+        ax[1].ylabel('Silhouette score') 
+        ax[1].set(xticks=np.arange(10, 50, 2))
+        ax[1].grid()
+        ax[1].title('Silhouette analysis For Optimal k')
+        
         plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-silhouette score-{start}-{stop}-{step}', bbox_inches ="tight")
-        plt.show()
 
         maxS = max(silhouette_avg)
         centroid += [K[silhouette_avg.index(maxS)]]
