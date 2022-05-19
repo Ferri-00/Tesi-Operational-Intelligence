@@ -46,9 +46,9 @@ import seaborn as sns
 
 def Graph(file_number, meanErr):
     for v in file_number:
-        with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv') as file_name:
+        with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}-msg.csv') as file_name:
             X = np.loadtxt(file_name, delimiter=",")
-        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv"
+        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileErr/storm-frontend-202003{v}-msg.csv"
         logs = pd.read_csv(file_name, index_col=0)
 
         # run K-Means algorithm: ?? clusters
@@ -67,9 +67,6 @@ def Graph(file_number, meanErr):
 
         print("We have {} centroids represented as {}-dimensional points.".format(km.cluster_centers_.shape[0],
                                                                                   km.cluster_centers_.shape[1]))    
-        # print the numerosity of each cluster
-    #     print(Counter(km.labels_))
-
         logs["kmean_labels"] = km.labels_
 
         label = np.unique(km.labels_)
@@ -79,30 +76,11 @@ def Graph(file_number, meanErr):
         fig, ax = plt.subplots(figsize = (8, int(len(label)/3)))
 
         for l, c in zip(label, count):
-            ax.barh(l, c, linewidth=0.5, edgecolor="white", label=logs.message[km.labels_==l][0])
-            ax.text(10, l-0.1, logs.message[logs.kmean_labels==l][0][:80]
-    #                 +'\n'+logs.message[logs.kmean_labels==l][0][30:60]
-                   )
+            ax.barh(l, c, linewidth=0.5, edgecolor="white", color='green', label=logs.message[km.labels_==l][0])
+            ax.text(10, l-0.1, logs.message[logs.kmean_labels==l][0][:80])
 
         ax.set(yticks=label)
 
-        plt.title(f'frontend-202003{v}')
-        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}', bbox_inches ="tight", facecolor='white')
-
-        # plot:
-        fig, ax = plt.subplots(figsize = (8, int(len(label)/3)))
-
-        for l, c in zip(label, count):
-            if error[l] > meanErr:
-                color='red'
-            else:
-                color='green'
-            ax.barh(l, c, linewidth=0.5, color=color, edgecolor="white", label=logs.message[logs.kmean_labels==l][0])
-            ax.text(10, l-0.2, logs.message[logs.kmean_labels==l][0][:80]
-    #                 +'\n'+logs.message[logs.kmean_labels==l][0][30:60]
-                   )
-
-        ax.set(yticks=label)
-        plt.title(f'frontend-202003{v} '+str(error))
-        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-color', bbox_inches ="tight")
-        plt.show()
+        plt.title(f'frontend-202003{v}-msg')
+        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-msg', bbox_inches ="tight", facecolor='white')
+        logs.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFileErr/storm-frontend-202003{v}-msg.csv")

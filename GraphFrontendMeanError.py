@@ -45,7 +45,7 @@ ipython = get_ipython()
 import seaborn as sns
 
 file_number = ['07', '08']
-n_cluster = 28
+n_cluster = 30
 
 meanErr = []
 meanErrMsg = []
@@ -53,7 +53,7 @@ for v in file_number:
     with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv') as file_name:
         X = np.loadtxt(file_name, delimiter=",")
     file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv"
-    logs = pd.read_csv(file_name, index_col=0, nrows=1e4)
+    logs = pd.read_csv(file_name, index_col=0)
 
     # run K-Means algorithm: 6 clusters
     km = KMeans(n_clusters=n_cluster, 
