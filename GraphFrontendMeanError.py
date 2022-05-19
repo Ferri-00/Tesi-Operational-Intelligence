@@ -44,7 +44,7 @@ ipython = get_ipython()
 # Visualizations
 import seaborn as sns
 
-file_number = ['07', '08']
+file_number = ['07','08','09','10','11','12','13']
 n_cluster = 30
 
 meanErr = []
@@ -79,19 +79,26 @@ for v in file_number:
 
     error = [0] * len(label)
     error_per_message = [0] * len(label)
+    logs['error_per_message'] = [0]*len(km.labels_)
 
     for l in label:
+        a = 0
         for msg in logs.message[km.labels_==l]:
             resultE = re.findall('error', msg.lower())
             resultF = re.findall('failure', msg.lower())
             error_per_message[l] += resultE
-            error_per_message[l] += resultE
+            error_per_message[l] += resultF
             if resultE!=None or resultF!=None:
                 error[l] += 1
+            logs.error_per_message[logs.kmean_labels == l][a] = resultE + resultF
+            a += 1
         error_per_message[l] /= len(logs.message[km.labels_==l])
 
     meanErr.append(np.mean(error))
     meanErrMsg.append(np.mean(error_per_message))
+    logs.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFileErr/storm-frontend-202003{v}-error.csv")
     
-print('The mean number of message with errors extracted from files', file_number, 'is', np.mean(meanErr))
-print('The mean number of error per message extracted from files', file_number, 'is', np.mean(meanErrMsg))
+print('The mean number of message with errors extracted from files', file_number[:2], 'is', np.mean(meanErr[:2]))
+print(meanErr)
+print('The mean number of error per message extracted from files', file_number[:2], 'is', np.mean(meanErrMsg[:2]))
+print(meanErrMsg)
