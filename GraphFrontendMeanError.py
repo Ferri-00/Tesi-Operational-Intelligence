@@ -86,11 +86,11 @@ for v in file_number:
         for msg in logs.message[km.labels_==l]:
             resultE = re.findall('error', msg.lower())
             resultF = re.findall('failure', msg.lower())
-            error_per_message[l] += resultE
-            error_per_message[l] += resultF
+            error_per_message[l] += len(resultE)
+            error_per_message[l] += len(resultF)
             if resultE!=None or resultF!=None:
                 error[l] += 1
-            logs.error_per_message[logs.kmean_labels == l][a] = resultE + resultF
+            logs.error_per_message[logs.kmean_labels == l][a] = len(resultE) + len(resultF)
             a += 1
         error_per_message[l] /= len(logs.message[km.labels_==l])
 
