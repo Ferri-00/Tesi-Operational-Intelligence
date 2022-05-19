@@ -115,9 +115,8 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
     plt.grid()
     plt.title('Silhouette analysis for Optimal k computed on all files')
     plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-silhouette score-{start}-{stop}-{step}', bbox_inches ="tight")
-    plt.show()
 
-BestCentroid(['07','08','09','10','11','12','13'], step=5)
+BestCentroid(['07','08','09','10','11','12','13'], start=25, stop=35, step=1)
 
 # if __name__ == "__main__":
 #     file_number = int(sys.argv[1])
