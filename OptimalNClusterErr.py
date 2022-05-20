@@ -47,6 +47,7 @@ import seaborn as sns
 
 def BestCentroid(file_number, start=10, stop=50, step=1):
     silhouette = []
+    centroid=[]
     for v in file_number:
         file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileErr/storm-frontend-202003{v}-err.csv"
         with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}-err.csv') as file_name:
