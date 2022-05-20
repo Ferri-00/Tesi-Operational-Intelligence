@@ -70,10 +70,10 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
             t0 = time()
             km.fit(X)
             print("done in %0.3fs" % (time() - t0))
-            print()
 
             print("We have {} centroids represented as {}-dimensional points.".format(km.cluster_centers_.shape[0],
                                                                                       km.cluster_centers_.shape[1]))
+            print()
 
             Sum_of_squared_distances.append(km.inertia_)
             cluster_labels = km.labels_
@@ -83,18 +83,20 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
             label = np.unique(km.labels_)
             count = [Counter(km.labels_)[i] for i in label]
 
+        np.savetxt(f'frontend-202003{v}-{start}-{stop}-{step}', (K, Sum_of_squared_distances, silhouette_avg), delimiter=',')
+
         fig, ax =  plt.subplots(2, 1, figsize=(10, 4))
         ax[0].plot(K,Sum_of_squared_distances,'bx-')
         ax[0].set_xlabel('Values of K') 
         ax[0].set_ylabel('Sum of squared distances/Inertia')
         ax[0].grid()
-        ax[0].title('Elbow Method For Optimal k')
+        ax[0].set_title('Elbow Method For Optimal k')
         
         ax[1].plot(K,silhouette_avg, 'bx-')
         ax[1].set_xlabel('Values of K') 
         ax[1].set_ylabel('Silhouette score') 
         ax[1].grid()
-        ax[1].title('Silhouette analysis For Optimal k')
+        ax[1].set_title('Silhouette analysis For Optimal k')
         
         plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-silhouette score-{start}-{stop}-{step}', bbox_inches ="tight")
 
@@ -104,16 +106,18 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
     
     print('Nnumber of centroids that maximize the silhouette scores is', centroid)
     print('Mean number of centroid that maximize the silhouette score is', mean(centroid))
+    
+    np.savetxt(f'frontend-{start}-{stop}-{step}', (K, silhouette), delimiter=',')
 
     silhouette = [sum([silhouette[i][j] for i in range(len(silhouette))]) for j in range(len(silhouette))]
     plt.plot(K,silhouette, 'bx-')
     plt.set_xlabel('Values of K') 
     plt.set_ylabel('Silhouette score') 
     plt.grid()
-    plt.title('Silhouette analysis for Optimal k computed on all files')
+    plt.set_title('Silhouette analysis for Optimal k computed on all files')
     plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-silhouette score-{start}-{stop}-{step}', bbox_inches ="tight")
 
-BestCentroid(['07','08','09','10','11','12','13'], start=25, stop=35, step=1)
+BestCentroid(['07','08'], start=25, stop=35, step=1)
 
 # if __name__ == "__main__":
 #     file_number = int(sys.argv[1])
