@@ -7,7 +7,6 @@ import re
 def division_errors(file_number):
     for v in file_number:
         file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv"
-        # file_name = f"../File/FrontendFileGroup/storm-frontend-202003{v}-group.txt"
         
         print('reading', file_name)
         logs = pd.read_csv(file_name, index_col=0)

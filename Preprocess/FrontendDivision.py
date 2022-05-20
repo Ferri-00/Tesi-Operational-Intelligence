@@ -6,7 +6,7 @@ def frontend_data(file_number):
     temporary_file = './temporaryFile.csv'
     
     for v in file_number:
-        file_name = f"./File/PreFile/storm-frontend-server.log-202003{v}"
+        file_name = f"/home/ATLAS-T3/eferri/File/PreFile/storm-frontend-server.log-202003{v}"
 
         print("reading ", file_name)
         frontend = pd.read_table(file_name , sep = " -  " , header= None , engine = 'python')
@@ -38,7 +38,7 @@ def frontend_data(file_number):
         frontend.insert(4, "id", temporary[1])
 
         print(f"saving storm-frontend-202003{v}.txt")
-        frontend.to_csv(f"./File/FrontendFile/storm-frontend-202003{v}.txt" , index=False)
+        frontend.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFile/storm-frontend-202003{v}.csv" , index=False)
 
     if os.path.exists(temporary_file):
         os.remove(temporary_file)

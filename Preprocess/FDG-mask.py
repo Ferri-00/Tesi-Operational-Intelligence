@@ -3,10 +3,8 @@ import time
 
 def group_data(file_number):    
     for v in file_number:
-        file_name = f".\File\FrontendFile\storm-frontend-202003{v}-mask.txt"
-#         file_name = f".\File\FrontendFile\storm-frontend-202003{v}-mask.txt"
+        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFile/storm-frontend-202003{v}-mask.csv"
 
-#         frontend = pd.read_csv(file_name, nrows = 1e4)
         frontend = pd.read_csv(file_name)
         print("reading ", file_name)
         
@@ -50,13 +48,13 @@ def group_data(file_number):
                 new_frontend.loc[i]['date_time_end'] = date_time[-1]
                 
         print(f"saving storm-frontend-202003{v}-mask-group.txt")
-        new_frontend.to_csv(f"./File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.txt")
+        new_frontend.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv")
 
 print("Starting grouping logs")
 
 t0 = time.time()
 
-# group_data(["07","08"])
+group_data(["07","08"])
 group_data(["09","10","11","12","13"])
 
 print(f"done in {int((time.time()-t0)/60)} minutes and {((time.time()-t0)%60)} seconds")
