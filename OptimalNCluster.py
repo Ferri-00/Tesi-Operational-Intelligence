@@ -110,7 +110,7 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
     
     np.savetxt(f'frontend-{start}-{stop}-{step}', (K, silhouette), delimiter=',')
 
-    silhouette = [sum([silhouette[i][j] for i in range(len(silhouette))]) for j in range(len(silhouette))]
+    silhouette = [sum([silhouette[i][j] for i in range(len(silhouette))]) for j in range(len(silhouette[0]))]
     plt.plot(K,silhouette, 'bx-')
     plt.set_xlabel('Values of K') 
     plt.set_ylabel('Silhouette score') 

@@ -110,7 +110,7 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
     print('Nnumber of centroids that maximize the silhouette scores is', centroid)
     print('Mean number of centroid that maximize the silhouette score is', np.mean(centroid))
 
-    silhouette = [sum([silhouette[i][j] for i in range(len(silhouette))]) for j in range(len(silhouette))]
+    silhouette = [sum([silhouette[i][j] for i in range(len(silhouette))]) for j in range(len(silhouette[0]))]
     np.savetxt(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-msg-{start}-{stop}-{step}', 
                (K, silhouette), delimiter=',')
     plt.plot(K,silhouette, 'bx-')
