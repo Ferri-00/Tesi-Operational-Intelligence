@@ -70,10 +70,10 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
             t0 = time()
             km.fit(X)
             print("done in %0.3fs" % (time() - t0))
-            print()
 
             print("We have {} centroids represented as {}-dimensional points.".format(km.cluster_centers_.shape[0],
                                                                                       km.cluster_centers_.shape[1]))
+            print()
 
             Sum_of_squared_distances.append(km.inertia_)
             cluster_labels = km.labels_
