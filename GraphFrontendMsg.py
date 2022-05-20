@@ -44,7 +44,7 @@ ipython = get_ipython()
 # Visualizations
 import seaborn as sns
 
-def Graph(file_number):
+def Graph(file_number, n_cluster):
     for v in file_number:
         with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}-msg.csv') as file_name:
             X = np.loadtxt(file_name, delimiter=",")
@@ -52,7 +52,7 @@ def Graph(file_number):
         logs = pd.read_csv(file_name, index_col=0)
 
         # run K-Means algorithm: ?? clusters
-        km = KMeans(n_clusters=30, 
+        km = KMeans(n_clusters=n_cluster, 
                     init='k-means++', 
                     max_iter=500, 
                     n_init=100,
@@ -83,6 +83,7 @@ def Graph(file_number):
 
         plt.title(f'frontend-202003{v}-msg')
         plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-msg', bbox_inches ="tight", facecolor='white')
-        logs.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFileErr/storm-frontend-202003{v}-msg.csv")
+        logs.to_csv(file_name)
+        np.savetxt(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-msg-center', km.cluster_centers_, delimiter=',')
 
-Graph(['07','08','09','10','11','12','13'])
+Graph(['07','08','09','10','11','12','13'], n_cluster=30)
