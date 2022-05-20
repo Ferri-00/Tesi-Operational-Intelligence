@@ -106,7 +106,7 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
         silhouette += [silhouette_avg]
     
     print('Nnumber of centroids that maximize the silhouette scores is', centroid)
-    print('Mean number of centroid that maximize the silhouette score is', mean(centroid))
+    print('Mean number of centroid that maximize the silhouette score is', np.mean(centroid))
     
     np.savetxt(f'frontend-{start}-{stop}-{step}', (K, silhouette), delimiter=',')
 
