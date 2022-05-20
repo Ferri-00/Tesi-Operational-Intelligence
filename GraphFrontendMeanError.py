@@ -67,12 +67,10 @@ for v in file_number:
     t0 = time()
     km.fit(X)
     print("done in %0.3fs" % (time() - t0))
-    print()
 
     print("We have {} centroids represented as {}-dimensional points.".format(km.cluster_centers_.shape[0],
                                                                               km.cluster_centers_.shape[1]))    
-    # print the numerosity of each cluster
-#     print(Counter(km.labels_))
+    print()
 
     logs["kmean_labels"] = km.labels_
     label = np.unique(km.labels_)
@@ -86,11 +84,13 @@ for v in file_number:
         for msg in logs.message[km.labels_==l]:
             resultE = re.findall('error', msg.lower())
             resultF = re.findall('failure', msg.lower())
+            resultP = re.findall('problem', msg.lower())
             error_per_message[l] += len(resultE)
             error_per_message[l] += len(resultF)
-            if resultE!=None or resultF!=None:
+            error_per_message[l] += len(resultP)
+            if resultE!=None or resultF!=None or resultP!=None:
                 error[l] += 1
-            logs.error_per_message[logs.kmean_labels == l][a] = len(resultE) + len(resultF)
+            logs.error_per_message[logs.kmean_labels == l][a] = len(resultE) + len(resultF) + len(resultP)
             a += 1
         error_per_message[l] /= len(logs.message[km.labels_==l])
 

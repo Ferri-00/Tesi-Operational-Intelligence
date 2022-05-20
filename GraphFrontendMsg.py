@@ -86,4 +86,4 @@ def Graph(file_number, n_cluster):
         logs.to_csv(file_name)
         np.savetxt(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-msg-center', km.cluster_centers_, delimiter=',')
 
-Graph(['07','08','09','10','11','12','13'], n_cluster=30)
+Graph(['07','08','09','10','11','12','13'], n_cluster=20)

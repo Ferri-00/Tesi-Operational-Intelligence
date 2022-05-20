@@ -48,7 +48,7 @@ def Graph(file_number, meanErr, n_cluster):
     for v in file_number:
         with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv') as file_name:
             X = np.loadtxt(file_name, delimiter=",")
-        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv"
+        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileErr/storm-frontend-202003{v}-error.csv"
         logs = pd.read_csv(file_name, index_col=0)
 
         # run K-Means algorithm: ?? clusters
@@ -93,7 +93,9 @@ def Graph(file_number, meanErr, n_cluster):
         fig, ax = plt.subplots(figsize = (8, int(len(label)/3)))
 
         for l, c in zip(label, count):
-            if error[l] > meanErr:
+            error = sum(logs.error_per_message[logs.kmean_labels == l]) / sum([len(logs.message[logs.kmean_labels == l][i]) 
+                                                                              for i in range(len(logs.message[logs.kmean_labels == l]))])
+            if error > meanErr:
                 color='red'
             else:
                 color='green'
