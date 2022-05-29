@@ -1,5 +1,7 @@
 import pandas as pd
 import time
+from time import time
+import sys
 
 def group_data(file_number):    
     for v in file_number:
@@ -52,9 +54,13 @@ def group_data(file_number):
 
 print("Starting grouping logs")
 
-t0 = time.time()
+if __name__ == "__main__":
+    t0 = time()
 
-group_data(["07","08"])
-group_data(["09","10","11","12","13"])
+    file_number = list(sys.argv[1:])
+    print('File number:', file_number)
+    group_data(file_number)
 
-print(f"done in {int((time.time()-t0)/60)} minutes and {((time.time()-t0)%60)} seconds")
+    print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+
+# ['07','08','09','10','11','12','13']

@@ -45,21 +45,6 @@ def Vectorisation(file_number):
         logs = pd.read_csv(file_name, index_col=0)
         print('creating tokens_per_message')
         tokens_per_message = [x.lower().split() for x in logs.message]
-        
-        # word_set = set()
-        # print('creating word_set')
-        # for mess in tokens_per_message:
-        #     word_set = word_set.union(set(mess))
-
-        # print("We have {} logs messages, for a total of {} unique tokens adopted.".format(
-        #     len(tokens_per_message), len(word_set)))
-
-        # word_dict = [dict.fromkeys(word_set, 0) for i in range(len(tokens_per_message))]
-
-        # # Compute raw frequencies of each token per each message
-        # for i in range(len(logs.message)):
-        #     for word in tokens_per_message[i]:
-        #         word_dict[i][word] += 1
 
         c = 0
         for i, dic in enumerate(tokens_per_message):
@@ -105,19 +90,20 @@ def Vectorisation(file_number):
         print()
 
 print("Starting the creation of the data set")
-t0 = time()
+# t0 = time()
 
-Vectorisation(["07"])
-Vectorisation(["08","09","10","11","12", "13"])
+# Vectorisation(["07"])
+# Vectorisation(["08","09","10","11","12", "13"])
 
-print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+# print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
 
-# if __name__ == "__main__":
-#     t0 = time()
+if __name__ == "__main__":
+    t0 = time()
 
-#     file_number = sys.argv[1]
-#     Vectorisation(file_number)
+    file_number = list(sys.argv[1:])
+    print('File number:', file_number)
+    Vectorisation(file_number)
 
-#     print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+    print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
 
 # ['07','08','09','10','11','12','13']

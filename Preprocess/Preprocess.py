@@ -1,6 +1,6 @@
 def preprocess_data(file_number):
     for v in file_number:
-        file_name = f"/home/ATLAS-T3/eferri/logs_7-13march/storm-atlas-1/storm-frontend-server.log-202003{v}"
+        file_name = f"/home/ATLAS-T3/eferri/logs_7-13march/storm-atlas/storm-frontend-server.log-202003{v}"
         
         print("reading ", file_name)
         

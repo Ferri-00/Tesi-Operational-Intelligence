@@ -1,4 +1,3 @@
-
 # import libraries
 from __future__ import print_function
 
@@ -91,9 +90,18 @@ def Vectorisation(file_number):
         print()
 
 print("Starting the creation of the data set")
-t0 = time()
+# t0 = time()
 
-Vectorisation(["07"])
-Vectorisation(["08","09","10","11","12", "13"])
+# Vectorisation(["07"])
+# Vectorisation(["08","09","10","11","12", "13"])
 
-print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+# print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+
+if __name__ == "__main__":
+    t0 = time()
+
+    file_number = list(sys.argv[1:])
+    Vectorisation(file_number)
+
+    print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+

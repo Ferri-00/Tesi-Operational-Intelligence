@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 import time
+from time import time
+
+import sys
 
 import re
 
@@ -16,8 +19,8 @@ def division_errors(file_number):
         for idx, msg in zip(logs.index, logs.message):
             resultE = re.search('error', msg.lower())
             resultF = re.search('failure', msg.lower())
-            resultP = re.search('problem', msg.lower())
-            if resultE!=None or resultF!=None or resultP!=None:
+            # resultP = re.search('problem', msg.lower())
+            if resultE!=None or resultF!=None:
                 errors.loc[idx] = logs.loc[idx]
                 logs = logs.drop(idx, axis=0)
                 errors.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFileErr/storm-frontend-202003{v}-err.csv", sep=',',
@@ -28,9 +31,11 @@ def division_errors(file_number):
         
 print("Starting division of files")
 
-t0=time.time()
+if __name__ == "__main__":
+    t0 = time()
 
-division_errors(["07"])
-division_errors(["08","09","10","11","12", "13"])
+    file_number = list(sys.argv[1:])
+    print('File number:', file_number)
+    division_errors(file_number)
 
-print(f"done in {int((time.time()-t0)/60)} minutes and {((time.time()-t0)%60)} seconds")
+    print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
