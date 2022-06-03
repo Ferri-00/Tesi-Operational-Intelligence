@@ -49,7 +49,6 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
     silhouette = []
     centroid = []
     for v in file_number:
-        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv"
         with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv') as file_name:
             X = np.loadtxt(file_name, delimiter=",")
 
@@ -64,7 +63,7 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
                         init='k-means++', 
                         max_iter=500, 
                         n_init=100,
-        #                 verbose=1
+                        verbose=1
                        )
 
             print("Clustering sparse data with %s" % km)
@@ -84,7 +83,7 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
             label = np.unique(km.labels_)
             count = [Counter(km.labels_)[i] for i in label]
 
-        np.savetxt(f'frontend-202003{v}-{start}-{stop}-{step}', (K, Sum_of_squared_distances, silhouette_avg), delimiter=',')
+        np.savetxt(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-{start}-{stop}-{step}.csv', (K, Sum_of_squared_distances, silhouette_avg), delimiter=',')
 
         fig, ax =  plt.subplots(2, 1, figsize=(10, 4))
         ax[0].plot(K,Sum_of_squared_distances,'bx-')
@@ -105,23 +104,32 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
         centroid += [K[silhouette_avg.index(maxS)]]
         silhouette += [silhouette_avg]
     
-    print('Nnumber of centroids that maximize the silhouette scores is', centroid)
-    print('Mean number of centroid that maximize the silhouette score is', np.mean(centroid))
+#     print('Number of centroids that maximize the silhouette scores is', centroid)
+#     print('Mean number of centroid that maximize the silhouette score is', np.mean(centroid))
     
-    np.savetxt(f'frontend-{start}-{stop}-{step}', (K, silhouette), delimiter=',')
+#     np.savetxt(f'frontend-{start}-{stop}-{step}', (K, silhouette), delimiter=',')
 
-    silhouette = [sum([silhouette[i][j] for i in range(len(silhouette))]) for j in range(len(silhouette[0]))]
-    plt.plot(K,silhouette, 'bx-')
-    plt.set_xlabel('Values of K') 
-    plt.set_ylabel('Silhouette score') 
-    plt.grid()
-    plt.set_title('Silhouette analysis for Optimal k computed on all files')
-    plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-silhouette score-{start}-{stop}-{step}', bbox_inches ="tight")
+#     silhouette = [sum([silhouette[i][j] for i in range(len(silhouette))]) for j in range(len(silhouette[0]))]
+#     plt.plot(K,silhouette, 'bx-')
+#     plt.xlabel('Values of K') 
+#     plt.ylabel('Silhouette score') 
+#     plt.grid()
+#     plt.title('Silhouette analysis for Optimal k computed on all files')
+#     plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-{start}-{stop}-{step}', bbox_inches ="tight")
 
-BestCentroid(['07','08'], start=25, stop=35, step=1)
+# BestCentroid(['07','08'], start=25, stop=35, step=1)
 
-# if __name__ == "__main__":
-#     file_number = int(sys.argv[1])
-#     BestCentroid(file_number)
-    
+if __name__ == "__main__":
+    t0 = time()
+
+    file_number = sys.argv[1]
+    start = int(sys.argv[2])
+    stop = int(sys.argv[3])
+    step = int(sys.argv[4])
+    print('File number:', file_number)
+    print('Arguments:', start, stop, step)
+    BestCentroid([file_number], start, stop, step)
+
+    print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+
 # ['07','08','09','10','11','12','13']

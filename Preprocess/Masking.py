@@ -44,6 +44,13 @@ def masking_frontend_data(file_number):
             f[i] = re.sub(ipv6_address, specific_substitute, f[i])
             f[i] = re.sub(ipv4_address, specific_substitute, f[i])
             f[i] = re.sub('(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})', '<TOKEN>', f[i])
+            words = f[i].split()
+            for j in range(len(words)):
+                 if words[j][:31] == 'srm://storm-fe.cr.cnaf.infn.it/':
+                      words[j] = '<URL>'
+                 if words[j][1:32] == 'srm://storm-fe.cr.cnaf.infn.it/':
+                      words[j] = '<URL>'
+            f[i] = " ".join(words)
 
         print(f"saving storm-frontend-202003{v}-mask.txt")
         data.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFile/storm-frontend-202003{v}-mask.csv", index=False)

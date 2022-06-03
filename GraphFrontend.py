@@ -106,9 +106,20 @@ def Graph(file_number, meanErr, n_cluster):
 
         ax.set(yticks=label)
         plt.title(f'frontend-202003{v} '+str(error))
-        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-color', bbox_inches ="tight")
+        plt.savefig(f'/home/ATLAS-T3/eferri/File/Graph/frontend-202003{v}', bbox_inches ="tight")
         logs.to_csv(file_name)
-        np.savetxt(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-err-center', km.cluster_centers_, delimiter=',')
+        np.savetxt(f'/home/ATLAS-T3/eferri/File/Graph/frontend-202003{v}.csv', km.cluster_centers_, delimiter=',')
 
 
-Graph(['07','08','09','10','11','12','13'], meanErr=0.21, n_cluster=30):
+if __name__ == "__main__":
+    t0 = time()
+
+    file_number = sys.argv[1]
+    n_cluster = int(sys.argv[2])
+    print('File number:', file_number)
+    print('Number of cluster:', n_cluster)
+    Graph([file_number], n_cluster=n_cluster)
+
+    print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+
+# ['07','08','09','10','11','12','13']

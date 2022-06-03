@@ -77,13 +77,24 @@ def Graph(file_number, n_cluster):
 
         for l, c in zip(label, count):
             ax.barh(l, c, linewidth=0.5, edgecolor="white", color='red', label=logs.message[km.labels_==l][0])
-            ax.text(10, l-0.1, logs.message[logs.kmean_labels==l][0][:80])
+            ax.text(10, l-0.15, logs.message[logs.kmean_labels==l][0][:80])
 
         ax.set(yticks=label)
 
         plt.title(f'frontend-202003{v}-err')
-        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-err', bbox_inches ="tight", facecolor='white')
+        plt.savefig(f'/home/ATLAS-T3/eferri/File/Graph/frontend-202003{v}-err', bbox_inches ="tight", facecolor='white')
         logs.to_csv(file_name)
-        np.savetxt(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-err-center', km.cluster_centers_, delimiter=',')
+        np.savetxt(f'/home/ATLAS-T3/eferri/File/Graph/frontend-202003{v}-err.csv', km.cluster_centers_, delimiter=',')
 
-Graph(['07','08','09','10','11','12','13'], n_cluster=25)
+if __name__ == "__main__":
+    t0 = time()
+
+    file_number = sys.argv[1]
+    n_cluster = int(sys.argv[2])
+    print('File number:', file_number)
+    print('Number of cluster:', n_cluster)
+    Graph([file_number], n_cluster=n_cluster)
+
+    print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+
+# ['07','08','09','10','11','12','13']
