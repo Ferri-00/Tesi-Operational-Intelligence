@@ -57,10 +57,8 @@ def Vectorisation(file_number):
         # Extract TF-IDF information
         print("Extracting features from the training dataset using a sparse vectorizer")
         t0 = time()
-        vectorizer = TfidfVectorizer(max_df=0.8, min_df=0.02, stop_words='english',
-                                     use_idf=True)
-        # vectorizer = TfidfVectorizer(stop_words='english',
-        #                              use_idf=True)
+        vectorizer = TfidfVectorizer(max_df=0.8, min_df=0.1,stop_words='english', use_idf=True)
+        # vectorizer = TfidfVectorizer(stop_words='english', use_idf=True)
         X = vectorizer.fit_transform(logs.message)
 
         print("done in %fs" % (time() - t0))
@@ -74,7 +72,7 @@ def Vectorisation(file_number):
         # Vectorizer results are normalized, which makes KMeans behave as
         # spherical k-means for better results. Since LSA/SVD results are
         # not normalized, we have to redo the normalization.
-        svd = TruncatedSVD(25)
+        svd = TruncatedSVD(15)
         normalizer = Normalizer(copy=False)
         lsa = make_pipeline(svd, normalizer)
         X = lsa.fit_transform(X)
@@ -90,12 +88,8 @@ def Vectorisation(file_number):
         print()
 
 print("Starting the creation of the data set")
-# t0 = time()
-
-# Vectorisation(["07"])
-# Vectorisation(["08","09","10","11","12", "13"])
-
-# print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
+print()
+print()
 
 if __name__ == "__main__":
     t0 = time()

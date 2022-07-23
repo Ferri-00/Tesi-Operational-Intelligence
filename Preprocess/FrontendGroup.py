@@ -5,7 +5,7 @@ import sys
 
 def group_data(file_number):    
     for v in file_number:
-        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFile/storm-frontend-202003{v}-mask.csv"
+        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFile/storm-frontend-202003{v}.csv"
 
         frontend = pd.read_csv(file_name)
         print("reading ", file_name)
@@ -50,7 +50,7 @@ def group_data(file_number):
                 new_frontend.loc[i]['date_time_end'] = date_time[-1]
                 
         print(f"saving storm-frontend-202003{v}-mask-group.txt")
-        new_frontend.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv")
+        new_frontend.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-group.csv")
 
 print("Starting grouping logs")
 

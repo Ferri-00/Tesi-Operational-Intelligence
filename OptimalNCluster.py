@@ -19,7 +19,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import Normalizer
 from sklearn import metrics
-from sklearn.metrics import silhouette_score
+from sklearn.metrics import silhouette_score, calinski_harabasz_score, davies_bouldin_score
 
 
 from sklearn.cluster import KMeans, MiniBatchKMeans
@@ -54,6 +54,8 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
 
         Sum_of_squared_distances = []
         silhouette_avg = []
+        calinski_harabasz_avg = []
+        davies_bouldin_avg = []
 
         K = range(start, stop, step)    
 
@@ -78,46 +80,38 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
             Sum_of_squared_distances.append(km.inertia_)
             cluster_labels = km.labels_
             # silhouette score
-            silhouette_avg.append(silhouette_score(X, cluster_labels))
+            silhouette_avg.append(silhouette_score(X, cluster_labels, metric='euclidean'))
+            calinski_harabasz_avg.append(calinski_harabasz_score(X, cluster_labels))
+            davies_bouldin_avg.append(davies_bouldin_score(X, cluster_labels))
 
             label = np.unique(km.labels_)
             count = [Counter(km.labels_)[i] for i in label]
 
-        np.savetxt(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-{start}-{stop}-{step}.csv', (K, Sum_of_squared_distances, silhouette_avg), delimiter=',')
+        np.savetxt(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-{start}-{stop}-{step}.csv',
+                   (K, Sum_of_squared_distances, silhouette_avg,calinski_harabasz_avg,davies_bouldin_avg),
+                   delimiter=',')
 
-        fig, ax =  plt.subplots(2, 1, figsize=(10, 4))
+        fig, ax =  plt.subplots(3, 1, figsize=(15, 6))
         ax[0].plot(K,Sum_of_squared_distances,'bx-')
         ax[0].set_xlabel('Values of K') 
-        ax[0].set_ylabel('Sum of squared distances/Inertia')
+        ax[0].set_ylabel('Sum of squared distances')
         ax[0].grid()
         ax[0].set_title('Elbow Method For Optimal k')
         
-        ax[1].plot(K,silhouette_avg, 'bx-')
+        ax[1].plot(K,silhouette_avg, 'x-', label='silhouette')
+        ax[1].plot(K,calinski_harabasz_avg, 'x-', label='calinski harabasz')
         ax[1].set_xlabel('Values of K') 
         ax[1].set_ylabel('Silhouette score') 
         ax[1].grid()
         ax[1].set_title('Silhouette analysis For Optimal k')
         
-        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-silhouette score-{start}-{stop}-{step}', bbox_inches ="tight")
+        ax[2].plot(K,davies_bouldin_avg, 'x-', label='davies bouldin')
+        ax[2].set_xlabel('Values of K') 
+        ax[2].grid()
 
-        maxS = max(silhouette_avg)
-        centroid += [K[silhouette_avg.index(maxS)]]
-        silhouette += [silhouette_avg]
-    
-#     print('Number of centroids that maximize the silhouette scores is', centroid)
-#     print('Mean number of centroid that maximize the silhouette score is', np.mean(centroid))
-    
-#     np.savetxt(f'frontend-{start}-{stop}-{step}', (K, silhouette), delimiter=',')
+        plt.legend()
+        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-{start}-{stop}-{step}', bbox_inches ="tight")
 
-#     silhouette = [sum([silhouette[i][j] for i in range(len(silhouette))]) for j in range(len(silhouette[0]))]
-#     plt.plot(K,silhouette, 'bx-')
-#     plt.xlabel('Values of K') 
-#     plt.ylabel('Silhouette score') 
-#     plt.grid()
-#     plt.title('Silhouette analysis for Optimal k computed on all files')
-#     plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-{start}-{stop}-{step}', bbox_inches ="tight")
-
-# BestCentroid(['07','08'], start=25, stop=35, step=1)
 
 if __name__ == "__main__":
     t0 = time()

@@ -56,7 +56,7 @@ def Graph(file_number, meanErr, n_cluster):
                     init='k-means++', 
                     max_iter=500, 
                     n_init=100,
-    #                 verbose=1
+                    verbose=1
                    )
 
         print("Clustering sparse data with %s" % km)

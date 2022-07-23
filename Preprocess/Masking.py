@@ -31,10 +31,11 @@ def masking_frontend_data(file_number):
     ipv6_address=re.compile(ipmask)     
     ipv4_address = re.compile(r'((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])')
 
+
     specific_substitute = '<IP>'
 
     for v in file_number:
-        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFile/storm-frontend-202003{v}.csv"
+        file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-group.csv"
         print("reading ", file_name)
     
         data = pd.read_csv(file_name)
@@ -44,16 +45,10 @@ def masking_frontend_data(file_number):
             f[i] = re.sub(ipv6_address, specific_substitute, f[i])
             f[i] = re.sub(ipv4_address, specific_substitute, f[i])
             f[i] = re.sub('(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})', '<TOKEN>', f[i])
-            words = f[i].split()
-            for j in range(len(words)):
-                 if words[j][:31] == 'srm://storm-fe.cr.cnaf.infn.it/':
-                      words[j] = '<URL>'
-                 if words[j][1:32] == 'srm://storm-fe.cr.cnaf.infn.it/':
-                      words[j] = '<URL>'
-            f[i] = " ".join(words)
+            f[i] = re.sub('srm:\/\/storm-fe.cr.cnaf.infn.it\/[a-zA-Z0-9_/.-]+', '<URL>', f[i])
 
         print(f"saving storm-frontend-202003{v}-mask.txt")
-        data.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFile/storm-frontend-202003{v}-mask.csv", index=False)
+        data.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv", index=False)
         
 
 if __name__ == "__main__":
