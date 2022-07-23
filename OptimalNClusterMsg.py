@@ -91,45 +91,32 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
                    (K, Sum_of_squared_distances, silhouette_avg,calinski_harabasz_avg,davies_bouldin_avg),
                    delimiter=',')
 
-        fig, ax =  plt.subplots(3, 1, figsize=(15, 6))
+        fig, ax =  plt.subplots(4, 1, figsize=(20, 6))
         ax[0].plot(K,Sum_of_squared_distances,'bx-')
         ax[0].set_xlabel('Values of K') 
         ax[0].set_ylabel('Sum of squared distances/Inertia')
         ax[0].grid()
         ax[0].set_title('Elbow Method For Optimal k')
         
-        ax[1].plot(K,silhouette_avg, 'x-', label='silhouette')
-        ax[1].plot(K,calinski_harabasz_avg, 'x-', label='calinski harabasz')
+        ax[1].plot(K,silhouette_avg, 'rx-', label='silhouette')
         ax[1].set_xlabel('Values of K') 
         ax[1].set_ylabel('Silhouette score') 
         ax[1].grid()
-        ax[1].set_title('Silhouette analysis For Optimal k')
+        ax[1].legend()
+#         ax[1].set_title('Silhouette analysis For Optimal k')
         
-        ax[2].plot(K,davies_bouldin_avg, 'x-', label='davies bouldin')
+        ax[2].plot(K,calinski_harabasz_avg, 'gx-', label='calinski harabasz')
         ax[2].set_xlabel('Values of K') 
         ax[2].grid()
-        
-        plt.legend()
+        ax[2].legend()
+
+        ax[3].plot(K,davies_bouldin_avg, 'x-', label='davies bouldin')
+        ax[3].set_xlabel('Values of K') 
+        ax[3].grid()
+        ax[3].legend()
+
         plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-msg-{start}-{stop}-{step}', bbox_inches ="tight")
 
-        maxS = max(silhouette_avg)
-        centroid += [K[silhouette_avg.index(maxS)]]
-        silhouette += [silhouette_avg]
-    
-#     print('Number of centroids that maximize the silhouette scores is', centroid)
-#     print('Mean number of centroid that maximize the silhouette score is', np.mean(centroid))
-    
-#     np.savetxt(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-msg-{start}-{stop}-{step}.csv', (K, silhouette), delimiter=',')
-
-#     silhouette = [sum([silhouette[i][j] for i in range(len(silhouette))]) for j in range(len(silhouette[0]))]
-#     plt.plot(K,silhouette, 'bx-')
-#     plt.xlabel('Values of K') 
-#     plt.ylabel('Silhouette score') 
-#     plt.grid()
-#     plt.title('Silhouette analysis for Optimal k computed on all files')
-#     plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-msg-{start}-{stop}-{step}', bbox_inches ="tight")
-
-# BestCentroid(['07','08'], start=25, stop=35, step=1)
 
 if __name__ == "__main__":
     t0 = time()

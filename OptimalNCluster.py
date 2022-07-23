@@ -91,25 +91,30 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
                    (K, Sum_of_squared_distances, silhouette_avg,calinski_harabasz_avg,davies_bouldin_avg),
                    delimiter=',')
 
-        fig, ax =  plt.subplots(3, 1, figsize=(15, 6))
+        fig, ax =  plt.subplots(4, 1, figsize=(20, 6))
         ax[0].plot(K,Sum_of_squared_distances,'bx-')
         ax[0].set_xlabel('Values of K') 
         ax[0].set_ylabel('Sum of squared distances')
         ax[0].grid()
         ax[0].set_title('Elbow Method For Optimal k')
         
-        ax[1].plot(K,silhouette_avg, 'x-', label='silhouette')
-        ax[1].plot(K,calinski_harabasz_avg, 'x-', label='calinski harabasz')
+        ax[1].plot(K,silhouette_avg, 'rx-', label='silhouette')
         ax[1].set_xlabel('Values of K') 
         ax[1].set_ylabel('Silhouette score') 
         ax[1].grid()
-        ax[1].set_title('Silhouette analysis For Optimal k')
+        ax[1].legend()
+#         ax[1].set_title('Silhouette analysis For Optimal k')
         
-        ax[2].plot(K,davies_bouldin_avg, 'x-', label='davies bouldin')
+        ax[2].plot(K,calinski_harabasz_avg, 'gx-', label='calinski harabasz')
         ax[2].set_xlabel('Values of K') 
         ax[2].grid()
+        ax[2].legend()
+        
+        ax[3].plot(K,davies_bouldin_avg, 'x-', label='davies bouldin')
+        ax[3].set_xlabel('Values of K') 
+        ax[3].grid()
+        ax[3].legend()
 
-        plt.legend()
         plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-{start}-{stop}-{step}', bbox_inches ="tight")
 
 
