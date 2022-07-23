@@ -49,10 +49,8 @@ def group_data(file_number):
                 new_frontend.loc[i]['date_time_start'] = date_time[0]
                 new_frontend.loc[i]['date_time_end'] = date_time[-1]
                 
-        print(f"saving storm-frontend-202003{v}-mask-group.txt")
+        print(f"saving storm-frontend-202003{v}-group.csv")
         new_frontend.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-group.csv")
-
-print("Starting grouping logs")
 
 if __name__ == "__main__":
     t0 = time()

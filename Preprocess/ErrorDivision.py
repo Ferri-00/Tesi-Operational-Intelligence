@@ -28,8 +28,6 @@ def division_errors(file_number):
                 errors.drop(idx, axis=0, inplace=True)
 
         logs.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFileErr/storm-frontend-202003{v}-msg.csv")
-        
-print("Starting division of files")
 
 if __name__ == "__main__":
     t0 = time()

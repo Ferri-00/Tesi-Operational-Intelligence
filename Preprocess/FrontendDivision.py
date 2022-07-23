@@ -1,12 +1,13 @@
 import pandas as pd
-import time
+
+from time import time
+import sys
 import os
 
 def frontend_data(file_number):
-    temporary_file = './temporaryFile.csv'
-    
     for v in file_number:
         file_name = f"/home/ATLAS-T3/eferri/File/PreFile/storm-frontend-server.log-202003{v}"
+        temporary_file = f"./temporaryFile{v}.csv"
 
         print("reading ", file_name)
         frontend = pd.read_table(file_name , sep = " -  " , header= None , engine = 'python')
@@ -37,7 +38,7 @@ def frontend_data(file_number):
         frontend.Level = temporary[0]
         frontend.insert(4, "id", temporary[1])
 
-        print(f"saving storm-frontend-202003{v}.txt")
+        print(f"saving storm-frontend-202003{v}.csv")
         frontend.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFile/storm-frontend-202003{v}.csv" , index=False)
 
     if os.path.exists(temporary_file):
@@ -46,11 +47,11 @@ def frontend_data(file_number):
         print("The file does not exist")
 
 
-print("Starting division of files")
+if __name__ == "__main__":
+    t0 = time()
 
-t0= time.time()
+    file_number = list(sys.argv[1:])
+    print('File number:', file_number)
+    frontend_data(file_number)
 
-frontend_data(["07"])
-frontend_data(["08","09","10","11","12", "13"])
-
-print(f"done in {int((time.time()-t0)/60)} minutes and {((time.time()-t0)%60)} seconds")
+    print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")

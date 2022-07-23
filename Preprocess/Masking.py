@@ -1,4 +1,3 @@
-
 import pandas as pd
 import re
 
@@ -47,7 +46,7 @@ def masking_frontend_data(file_number):
             f[i] = re.sub('(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})', '<TOKEN>', f[i])
             f[i] = re.sub('srm:\/\/storm-fe.cr.cnaf.infn.it\/[a-zA-Z0-9_/.-]+', '<URL>', f[i])
 
-        print(f"saving storm-frontend-202003{v}-mask.txt")
+        print(f"saving storm-frontend-202003{v}-mask-group.csv")
         data.to_csv(f"/home/ATLAS-T3/eferri/File/FrontendFileGroup/storm-frontend-202003{v}-mask-group.csv", index=False)
         
 

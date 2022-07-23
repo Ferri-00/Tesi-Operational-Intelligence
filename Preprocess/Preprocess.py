@@ -1,3 +1,6 @@
+from time import time
+import sys
+
 def preprocess_data(file_number):
     for v in file_number:
         file_name = f"/home/ATLAS-T3/eferri/logs_7-13march/storm-atlas/storm-frontend-server.log-202003{v}"
@@ -8,6 +11,12 @@ def preprocess_data(file_number):
             with open(file_name, 'r') as fread:
                 for row in fread:
                     fwrite.write(row.replace(',', ' '))
-                    
-preprocess_data(["07"])
-preprocess_data(["08","09","10","11","12", "13"])
+
+if __name__ == "__main__":
+    t0 = time()
+
+    file_number = list(sys.argv[1:])
+    print('File number:', file_number)
+    preprocess_data(file_number)
+
+    print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")

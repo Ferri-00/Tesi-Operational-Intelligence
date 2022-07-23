@@ -44,6 +44,10 @@ def Vectorisation(file_number):
         print('Reading', file_name)
         logs = pd.read_csv(file_name, index_col=0)
         print('creating tokens_per_message')
+        for x, y in zip(logs.message, logs.index):
+            print(x)
+            print(y)
+            print(x.lower())
         tokens_per_message = [x.lower().split() for x in logs.message]
         
         c = 0
@@ -57,7 +61,7 @@ def Vectorisation(file_number):
         # Extract TF-IDF information
         print("Extracting features from the training dataset using a sparse vectorizer")
         t0 = time()
-        vectorizer = TfidfVectorizer(max_df=0.8, min_df=0.1,stop_words='english', use_idf=True)
+        vectorizer = TfidfVectorizer(max_df=0.8, min_df=0.05,stop_words='english', use_idf=True)
         # vectorizer = TfidfVectorizer(stop_words='english', use_idf=True)
         X = vectorizer.fit_transform(logs.message)
 
@@ -72,7 +76,7 @@ def Vectorisation(file_number):
         # Vectorizer results are normalized, which makes KMeans behave as
         # spherical k-means for better results. Since LSA/SVD results are
         # not normalized, we have to redo the normalization.
-        svd = TruncatedSVD(15)
+        svd = TruncatedSVD(25)
         normalizer = Normalizer(copy=False)
         lsa = make_pipeline(svd, normalizer)
         X = lsa.fit_transform(X)
