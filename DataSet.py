@@ -55,9 +55,11 @@ def Vectorisation(file_number):
         print("Warning: there are {} blanck messages which will be excluded from the analysis.".format(c))
 
         # Extract TF-IDF information
-        print("Extracting features from the training dataset using a sparse vectorizer")
+        max_df=0.8
+        min_df=0.02
+        print("Extracting features from the training dataset using a sparse vectorizer with max_df={} and min_df={}".format(max_df, min_df))
         t0 = time()
-        vectorizer = TfidfVectorizer(max_df=0.8, min_df=0.05,stop_words='english', use_idf=True)
+        vectorizer = TfidfVectorizer(max_df=max_df, min_df=min_df,stop_words='english', use_idf=True)
         # vectorizer = TfidfVectorizer(stop_words='english', use_idf=True)
         X = vectorizer.fit_transform(logs.message)
 
@@ -72,7 +74,7 @@ def Vectorisation(file_number):
         # Vectorizer results are normalized, which makes KMeans behave as
         # spherical k-means for better results. Since LSA/SVD results are
         # not normalized, we have to redo the normalization.
-        svd = TruncatedSVD(25)
+        svd = TruncatedSVD(15)
         normalizer = Normalizer(copy=False)
         lsa = make_pipeline(svd, normalizer)
         X = lsa.fit_transform(X)
