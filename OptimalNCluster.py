@@ -45,11 +45,11 @@ ipython = get_ipython()
 # Visualizations
 import seaborn as sns
 
-def BestCentroid(file_number, start=10, stop=50, step=1):
+def BestCentroid(file_number, SVD, start=10, stop=50, step=1):
     silhouette = []
     centroid = []
     for v in file_number:
-        with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}.csv') as file_name:
+        with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}-{SVD}.csv') as file_name:
             X = np.loadtxt(file_name, delimiter=",")
 
         Sum_of_squared_distances = []
@@ -87,20 +87,20 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
             label = np.unique(km.labels_)
             count = [Counter(km.labels_)[i] for i in label]
 
-        np.savetxt(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-{start}-{stop}-{step}.csv',
+        np.savetxt(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-{SVD}-{start}-{stop}-{step}.csv',
                    (K, Sum_of_squared_distances, silhouette_avg,calinski_harabasz_avg,davies_bouldin_avg),
                    delimiter=',')
 
         fig, ax =  plt.subplots(4, 1, figsize=(20, 6))
-        ax[0].plot(K,Sum_of_squared_distances,'bx-')
+        ax[0].plot(K,Sum_of_squared_distances,'bx-', label='Elbow Method')
         ax[0].set_xlabel('Values of K') 
-        ax[0].set_ylabel('Sum of squared distances')
+        ax[0].set_ylabel('Sum of \n squared \n distances')
         ax[0].grid()
-        ax[0].set_title('Elbow Method For Optimal k')
+        ax[0].set_title(f'Best centroid n. for frontend {v}')
         
         ax[1].plot(K,silhouette_avg, 'rx-', label='silhouette')
         ax[1].set_xlabel('Values of K') 
-        ax[1].set_ylabel('Silhouette score') 
+        ax[1].set_ylabel('Silhouette \n score') 
         ax[1].grid()
         ax[1].legend()
 #         ax[1].set_title('Silhouette analysis For Optimal k')
@@ -115,7 +115,7 @@ def BestCentroid(file_number, start=10, stop=50, step=1):
         ax[3].grid()
         ax[3].legend()
 
-        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-{start}-{stop}-{step}', bbox_inches ="tight")
+        plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-{SVD}-{start}-{stop}-{step}', bbox_inches ="tight")
 
 
 if __name__ == "__main__":
@@ -125,9 +125,10 @@ if __name__ == "__main__":
     start = int(sys.argv[2])
     stop = int(sys.argv[3])
     step = int(sys.argv[4])
+    SVD = int(sys.argv[5])
     print('File number:', file_number)
-    print('Arguments:', start, stop, step)
-    BestCentroid([file_number], start, stop, step)
+    print('Arguments:', start, stop, step, SVD)
+    BestCentroid([file_number], SVD, start, stop, step)
 
     print(f"done in {int((time()-t0)/60)} minutes and {((time()-t0)%60)} seconds")
 
