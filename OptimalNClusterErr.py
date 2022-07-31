@@ -108,7 +108,7 @@ def BestCentroid(file_number, SVD, start=10, stop=50, step=1):
             ax[i].set_xlabel('Values of K')
             ax[i].grid()
             ax[i].legend()
-            ax[i].set_xticks(np.arange(2, 20, step=1))
+            ax[i].set_xticks(np.arange(start, stop, step=step))
 
         plt.savefig(f'/home/ATLAS-T3/eferri/File/BestCentroid/frontend-202003{v}-{SVD}-err-{start}-{stop}-{step}', bbox_inches ="tight")
 
