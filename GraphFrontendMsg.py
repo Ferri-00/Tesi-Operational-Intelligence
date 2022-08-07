@@ -56,7 +56,8 @@ def Graph(file_number, n_cluster):
                     init='k-means++', 
                     max_iter=500, 
                     n_init=100,
-                    verbose=1
+                    verbose=1,
+                    random_state=20
                    )
 
         print("Clustering sparse data with %s" % km)
@@ -84,6 +85,7 @@ def Graph(file_number, n_cluster):
         plt.title(f'frontend-202003{v}-msg')
         plt.savefig(f'/home/ATLAS-T3/eferri/File/Graph/frontend-202003{v}-msg', bbox_inches ="tight", facecolor='white')
         logs.to_csv(file_name)
+        np.savetxt(f'/home/ATLAS-T3/eferri/File/Graph/frontend-202003{v}-msg.csv', (label, count), delimiter=',')
         np.savetxt(f'/home/ATLAS-T3/eferri/File/Graph/frontend-202003{v}-msg-centers.csv', km.cluster_centers_, delimiter=',')
 
 if __name__ == "__main__":

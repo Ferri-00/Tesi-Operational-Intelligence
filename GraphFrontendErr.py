@@ -46,7 +46,7 @@ import seaborn as sns
 
 def Graph(file_number, n_cluster):
     for v in file_number:
-        with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}-22-err.csv') as file_name:
+        with open(f'/home/ATLAS-T3/eferri/File/DataSet/data-set-frontend-202003{v}-23-err.csv') as file_name:
             X = np.loadtxt(file_name, delimiter=",")
         file_name = f"/home/ATLAS-T3/eferri/File/FrontendFileErr/storm-frontend-202003{v}-err.csv"
         logs = pd.read_csv(file_name, index_col=0)
@@ -56,7 +56,8 @@ def Graph(file_number, n_cluster):
                     init='k-means++', 
                     max_iter=500, 
                     n_init=100,
-                    verbose=1
+                    verbose=1,
+                    random_state=20
                    )
 
         print("Clustering sparse data with %s" % km)
@@ -73,8 +74,8 @@ def Graph(file_number, n_cluster):
         count = [Counter(km.labels_)[i] for i in label]
 
         # plot:
-        fig, ax = plt.subplots(figsize = (8, int(len(label)/3)))
-
+#        fig, ax = plt.subplots(figsize = (8, int(len(label+1)/3)))
+        fig, ax = plt.subplots(figsize = (8, 1))
         for l, c in zip(label, count):
             ax.barh(l, c, linewidth=0.5, edgecolor="white", color='red', label=logs.message[km.labels_==l][0])
             ax.text(10, l-0.15, logs.message[logs.kmean_labels==l][0][:80])
@@ -84,6 +85,7 @@ def Graph(file_number, n_cluster):
         plt.title(f'frontend-202003{v}-err')
         plt.savefig(f'/home/ATLAS-T3/eferri/File/Graph/frontend-202003{v}-err', bbox_inches ="tight", facecolor='white')
         logs.to_csv(file_name)
+        np.savetxt(f'/home/ATLAS-T3/eferri/File/Graph/frontend-202003{v}-err.csv', (label, count), delimiter=',')
         np.savetxt(f'/home/ATLAS-T3/eferri/File/Graph/frontend-202003{v}-err-centers.csv', km.cluster_centers_, delimiter=',')
 
 if __name__ == "__main__":

@@ -91,7 +91,7 @@ def BestCentroid(file_number, SVD, start=10, stop=50, step=1):
                    (K, Sum_of_squared_distances, silhouette_avg,calinski_harabasz_avg,davies_bouldin_avg),
                    delimiter=',')
 
-        fig, ax =  plt.subplots(4, 1, figsize=(20, 6))
+        fig, ax =  plt.subplots(3, 1, figsize=(20, 6))
         ax[0].plot(K,Sum_of_squared_distances,'bx-', label='Elbow Method')
         ax[0].set_ylabel('Sum of \n squared \n distances')
         ax[0].set_title(f'Best centroid n. for frontend-err {v}')
@@ -100,11 +100,12 @@ def BestCentroid(file_number, SVD, start=10, stop=50, step=1):
         ax[1].set_ylabel('Silhouette \n score') 
 #         ax[1].set_title('Silhouette analysis For Optimal k')
         
-        ax[2].plot(K,calinski_harabasz_avg, 'gx-', label='calinski harabasz')
+#         ax[2].plot(K,calinski_harabasz_avg, 'gx-', label='calinski harabasz')
 
-        ax[3].plot(K,davies_bouldin_avg, 'x-', label='davies bouldin')
-        
-        for i in range(4):
+        ax[2].plot(K,davies_bouldin_avg, 'x-', label='davies bouldin')
+        ax[2].set_ylabel('Davies Bouldin \n score')
+
+        for i in range(3):
             ax[i].set_xlabel('Values of K')
             ax[i].grid()
             ax[i].legend()
