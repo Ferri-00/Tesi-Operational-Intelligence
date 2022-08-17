@@ -11,16 +11,8 @@ from collections import Counter, defaultdict
 
 import time
 
-from sklearn.datasets import fetch_20newsgroups
-from sklearn.decomposition import TruncatedSVD
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction.text import HashingVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import Normalizer
 from sklearn import metrics
 from sklearn.metrics import silhouette_score, calinski_harabasz_score, davies_bouldin_score
-
 
 from sklearn.cluster import KMeans, MiniBatchKMeans
 
